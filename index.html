@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div id="heart-container"></div>
+
+    <div id="game-hint">
+        <span>Psst... Pop the balloon hearts! ✨</span>
+    </div>
+
+    <div id="score-board">Love Score: <span id="score">0</span></div>
+
+    <div id="main-card" class="container">
+        <div class="img-wrapper main-img">
+            <img src="04EB8075-51F1-4134-B43D-C42ADA8472A9.jpeg" alt="Us">
+        </div>
+        <h1 class="title">Will you be my Valentine? ❤️</h1>
+        <div class="btn-group">
+            <button id="yes-btn">YES!</button>
+            <button id="no-btn">No</button>
+        </div>
+    </div>
+
+    <div id="success-page" class="success-container hidden">
+        <div class="notebook-section">
+            <div class="notebook" id="notebook">
+                <div class="notebook-cover" id="notebook-cover">
+                    <div class="cover-design">
+                        <div class="gold-latch"></div>
+                        <h2>Reasons I Love You</h2>
+                        <p>Click to Open 📖</p>
+                    </div>
+                </div>
+
+                <div class="notebook-page">
+                    <div class="spiral-rings">
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                    </div>
+                    <div class="page-content">
+                        <h3>10 Things I Love...</h3>
+                        <ol>
+                            <li>Your beautiful smile</li>
+                            <li>How you always make me laugh</li>
+                            <li>The way you look at me</li>
+                            <li>Your kind heart</li>
+                            <li>How you support me</li>
+                            <li>Your amazing hugs</li>
+                            <li>Our late night talks</li>
+                            <li>How smart you are</li>
+                            <li>Your music taste</li>
+                            <li>Just being you ❤️</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="img-wrapper-small">
+                <img src="att.OVfa5ON4qJEnf91AT6j3GUyKQu9mZL_LtatSXgzSzPg.jpg" alt="Celebration">
+            </div>
+            <h1 class="yay-text">Yay! I love you! 🥰</h1>
+
+            <form action="https://formspree.io/f/xqedkqdy" method="POST" class="love-form">
+                <label>Tell me why you love me...</label>
+                <textarea name="message" placeholder="Type here..." required></textarea>
+                <button type="submit" class="send-btn">Send to Raven 💌</button>
+            </form>
+            <button id="back-btn">← Go Back</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
