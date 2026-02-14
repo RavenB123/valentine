@@ -12,9 +12,9 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
-/* Background Balloon Hearts */
 #heart-container {
     position: fixed;
     top: 0;
@@ -28,36 +28,17 @@ body {
 .heart {
     position: absolute;
     cursor: pointer;
-    user-select: none;
     z-index: 1;
-    display: flex;
     filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.2));
-    transition: transform 0.1s ease;
     pointer-events: auto;
 }
 
 .heart::before {
     content: '❤️';
-    font-size: 60px;
+    font-size: clamp(40px, 10vw, 60px);
     background: radial-gradient(circle at 35% 35%, #ff9aaf, #ff4d6d);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-/* Game Elements */
-#game-hint {
-    position: fixed;
-    top: 80px;
-    left: 20px;
-    background: white;
-    padding: 12px 20px;
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 2px dashed var(--primary-pink);
-    font-size: 0.85rem;
-    color: var(--primary-pink);
-    z-index: 100;
-    animation: bounce 2s infinite;
 }
 
 #score-board {
@@ -66,14 +47,26 @@ body {
     left: 20px;
     background: var(--primary-pink);
     color: white;
-    padding: 10px 25px;
+    padding: 10px 20px;
     border-radius: 50px;
     font-weight: bold;
     z-index: 100;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Containers */
+#game-hint {
+    position: fixed;
+    bottom: 20px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 2px dashed var(--primary-pink);
+    color: var(--primary-pink);
+    z-index: 100;
+    font-size: 0.8rem;
+    animation: bounce 2s infinite;
+}
+
 .container,
 .success-container {
     background: rgba(255, 255, 255, 0.95);
@@ -86,16 +79,16 @@ body {
 .container {
     padding: 2rem;
     text-align: center;
-    width: 380px;
+    width: 90%;
+    max-width: 380px;
 }
 
 .main-img {
-    height: 350px;
+    height: clamp(200px, 40vh, 350px);
     border-radius: 20px;
     overflow: hidden;
     margin-bottom: 15px;
     border: 5px solid white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .main-img img {
@@ -106,34 +99,42 @@ body {
 
 .title {
     font-family: 'Dancing Script', cursive;
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 8vw, 2.2rem);
     color: var(--primary-pink);
-    margin-bottom: 20px;
+    margin-top: 0;
 }
 
 .success-container {
     display: flex;
-    padding: 2rem;
-    max-width: 900px;
+    flex-direction: row;
+    padding: 2.5rem;
+    max-width: 850px;
     width: 95%;
-    gap: 30px;
-    height: 80vh;
-}
-
-.notebook-section,
-.info-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    gap: 40px;
     align-items: center;
     justify-content: center;
 }
 
-/* 3D Notebook */
+.img-wrapper-small {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--primary-pink);
+    margin: 0 auto 15px auto;
+    transition: transform 0.3s ease;
+}
+
+.img-wrapper-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .notebook {
     position: relative;
-    width: 320px;
-    height: 420px;
+    width: 280px;
+    height: 380px;
     perspective: 1500px;
 }
 
@@ -143,135 +144,81 @@ body {
     height: 100%;
     background: #a31d5d;
     color: white;
-    border-radius: 10px 15px 15px 10px;
+    border-radius: 5px 15px 15px 5px;
     z-index: 5;
     transform-origin: left;
-    transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: transform 1s ease;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    cursor: pointer;
-    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.3);
-    border-left: 5px solid #801648;
+    align-items: center;
     backface-visibility: hidden;
+    border-left: 5px solid #801648;
+    cursor: pointer;
 }
 
-.cover-design h2 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-}
-
-.gold-latch {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 20px;
-    height: 40px;
-    background: gold;
-    border-radius: 5px 0 0 5px;
+.notebook.open .notebook-cover {
+    transform: rotateY(-135deg);
 }
 
 .notebook-page {
     position: absolute;
     width: 98%;
     height: 98%;
-    top: 1%;
-    left: 1%;
     background: var(--paper);
-    border-radius: 0 15px 15px 0;
-    padding: 25px;
-    z-index: 1;
-    overflow: hidden;
+    padding: 20px;
     background-image: linear-gradient(#d1e9ff 1px, transparent 1px);
-    background-size: 100% 30px;
-    box-shadow: inset 5px 0 10px rgba(0, 0, 0, 0.05);
+    background-size: 100% 28px;
+    box-sizing: border-box;
 }
 
-.notebook.open .notebook-cover {
-    transform: rotateY(-140deg);
-}
+@media (max-width: 768px) {
+    .success-container {
+        flex-direction: column;
+        padding: 1.5rem;
+        overflow-y: auto;
+        height: 90vh;
+    }
 
-.spiral-rings {
-    position: absolute;
-    left: 8px;
-    top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
+    .notebook {
+        width: 240px;
+        height: 320px;
+    }
 
-.ring {
-    width: 12px;
-    height: 12px;
-    border: 2px solid #888;
-    border-radius: 50%;
-}
-
-.page-content h3 {
-    font-family: 'Dancing Script', cursive;
-    margin: 0 0 10px 0;
-    color: #333;
-}
-
-.page-content ol {
-    font-size: 0.85rem;
-    line-height: 28px;
-    padding-left: 20px;
-    color: #444;
-}
-
-/* Buttons & Form */
-.img-wrapper-small {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid var(--primary-pink);
-    margin-bottom: 10px;
-}
-
-.img-wrapper-small img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    .img-wrapper-small {
+        width: 110px;
+        height: 110px;
+    }
 }
 
 .love-form {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 8px;
+    gap: 10px;
 }
 
 textarea {
     border-radius: 12px;
     padding: 10px;
-    height: 60px;
+    height: 80px;
     border: 2px solid #ffccd5;
-    font-family: inherit;
     resize: none;
+    font-family: inherit;
 }
 
 .send-btn {
     background: #4CAF50;
     color: white;
-    padding: 10px;
+    padding: 12px;
     border-radius: 12px;
-    cursor: pointer;
     border: none;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .hidden {
-    display: none;
-}
-
-button {
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
+    display: none !important;
 }
 
 #yes-btn {
@@ -279,15 +226,19 @@ button {
     color: white;
     border-radius: 50px;
     padding: 12px 35px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 #no-btn {
     background: #eee;
     border-radius: 50px;
-    padding: 10px 30px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    z-index: 100;
+    padding: 12px 35px;
+    border: none;
+    font-weight: bold;
+    transition: 0.2s ease-out;
+    cursor: pointer;
 }
 
 #back-btn {
@@ -295,6 +246,8 @@ button {
     color: var(--primary-pink);
     text-decoration: underline;
     margin-top: 10px;
+    border: none;
+    cursor: pointer;
 }
 
 @keyframes bounce {
