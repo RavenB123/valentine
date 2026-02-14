@@ -8,57 +8,54 @@ const scoreElement = document.getElementById('score');
 
 let score = 0;
 
-// 1. Balloon Hearts Logic
 function createHeart() {
     const heart = document.createElement('div');
     heart.classList.add('heart');
-    heart.style.left = Math.random() * 80 + 5 + 'vw';
+    heart.style.left = Math.random() * 85 + 5 + 'vw';
     heart.style.top = '105vh';
-
-    const duration = Math.random() * 4 + 8;
+    const duration = Math.random() * 3 + 7;
     heart.style.transition = `top ${duration}s linear, opacity 0.3s`;
-
     document.getElementById('heart-container').appendChild(heart);
 
-    heart.addEventListener('mousedown', (e) => {
+    const pop = (e) => {
         score++;
         scoreElement.innerText = score;
-        heart.style.transform = 'scale(1.6)';
         heart.style.opacity = '0';
-
+        const xPos = e.clientX || (e.touches && e.touches[0].clientX);
+        const yPos = e.clientY || (e.touches && e.touches[0].clientY);
         confetti({
-            particleCount: 50,
-            spread: 70,
-            origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight },
-            colors: ['#ff4d6d', '#ffccd5', '#ffffff']
+            particleCount: 30,
+            origin: { x: xPos / window.innerWidth, y: yPos / window.innerHeight }
         });
-        setTimeout(() => { if (heart.parentNode) heart.remove(); }, 100);
-    });
+        setTimeout(() => heart.remove(), 100);
+    };
 
+    heart.addEventListener('mousedown', pop);
+    heart.addEventListener('touchstart', (e) => { e.preventDefault(); pop(e); });
     setTimeout(() => { heart.style.top = '-20vh'; }, 100);
     setTimeout(() => { if (heart.parentNode) heart.remove(); }, duration * 1000);
 }
-setInterval(createHeart, 1000);
+setInterval(createHeart, 1200);
 
-// 2. RUNAWAY NO BUTTON (Stays on screen)
-noBtn.addEventListener('mouseover', () => {
+const moveButton = () => {
     const padding = 30;
     const maxX = window.innerWidth - noBtn.offsetWidth - padding;
     const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-
     const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
     const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-
     noBtn.style.position = 'fixed';
     noBtn.style.left = `${randomX}px`;
     noBtn.style.top = `${randomY}px`;
-});
+    noBtn.style.zIndex = "1000";
+};
 
-// 3. Page Navigation
+noBtn.addEventListener('mouseover', moveButton);
+noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
 yesBtn.addEventListener('click', () => {
     mainCard.classList.add('hidden');
     successPage.classList.remove('hidden');
-    confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 });
 
 backBtn.addEventListener('click', () => {
@@ -69,7 +66,6 @@ backBtn.addEventListener('click', () => {
     noBtn.style.top = '0';
 });
 
-// 4. Notebook Flip
 document.getElementById('notebook-cover').addEventListener('click', () => {
     notebook.classList.toggle('open');
 });
