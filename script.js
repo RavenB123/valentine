@@ -8,6 +8,7 @@ const scoreElement = document.getElementById('score');
 
 let score = 0;
 
+// Balloon Heart Logic
 function createHeart() {
     const heart = document.createElement('div');
     heart.classList.add('heart');
@@ -24,7 +25,7 @@ function createHeart() {
         const xPos = e.clientX || (e.touches && e.touches[0].clientX);
         const yPos = e.clientY || (e.touches && e.touches[0].clientY);
         confetti({
-            particleCount: 30,
+            particleCount: 20,
             origin: { x: xPos / window.innerWidth, y: yPos / window.innerHeight }
         });
         setTimeout(() => heart.remove(), 100);
@@ -35,10 +36,11 @@ function createHeart() {
     setTimeout(() => { heart.style.top = '-20vh'; }, 100);
     setTimeout(() => { if (heart.parentNode) heart.remove(); }, duration * 1000);
 }
-setInterval(createHeart, 1200);
+setInterval(createHeart, 1500);
 
+// Runaway "No" Button
 const moveButton = () => {
-    const padding = 30;
+    const padding = 35;
     const maxX = window.innerWidth - noBtn.offsetWidth - padding;
     const maxY = window.innerHeight - noBtn.offsetHeight - padding;
     const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
@@ -52,6 +54,7 @@ const moveButton = () => {
 noBtn.addEventListener('mouseover', moveButton);
 noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
 
+// Page Navigation
 yesBtn.addEventListener('click', () => {
     mainCard.classList.add('hidden');
     successPage.classList.remove('hidden');
@@ -61,11 +64,16 @@ yesBtn.addEventListener('click', () => {
 backBtn.addEventListener('click', () => {
     successPage.classList.add('hidden');
     mainCard.classList.remove('hidden');
+    notebook.classList.remove('open'); // Reset book when going back
     noBtn.style.position = 'relative';
     noBtn.style.left = '0';
     noBtn.style.top = '0';
 });
 
-document.getElementById('notebook-cover').addEventListener('click', () => {
+// Notebook Toggle (Open/Close)
+const toggleNotebook = () => {
     notebook.classList.toggle('open');
-});
+};
+
+document.getElementById('notebook-cover').addEventListener('click', toggleNotebook);
+document.getElementById('notebook-page').addEventListener('click', toggleNotebook);
